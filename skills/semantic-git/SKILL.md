@@ -7,6 +7,14 @@ description: Manage Git commits using conventional commit format with atomic sta
 
 Manage Git commits using conventional commit format with atomic commits and concise messages.
 
+## When to Use
+
+- Committing changes to git
+- Staging files for commit
+- Creating commit messages
+- Managing atomic commits
+- Before pushing changes
+
 ## Core Principles
 
 - **Atomic commits**: Stage and commit related changes together. Tests go with implementation code.
@@ -59,11 +67,33 @@ Use `!` after the type/scope to indicate breaking changes:
 
 ## Workflow
 
-1. **Stage atomic changes**: Group related files together (implementation + tests)
-2. **Suggest commit message**: Generate conventional commit message based on changes
-3. **Confirm with user**: Always ask for confirmation before committing
-4. **Commit**: Execute commit only after user approval
-5. **Next commit**: Before staging next set of changes, confirm with user
+1. **Implement atomic change**: Code + tests together
+   - Use test: for test only changes
+2. **Run CI checks**: Verify types, tests, and linting pass before staging
+   - Prefer single CI command if exists (e.g., `pnpm ci`, `npm run ci`, `just ci`)
+   - If no CI command, run checks individually (typecheck, test, lint)
+   - If any check fails, stop and report - do not proceed
+3. **Stage atomic changes**: Group related files together (implementation + tests)
+4. **Suggest commit message**: Generate conventional commit message based on changes
+5. **Confirm with user**: Always ask for confirmation before committing
+6. **Commit**: Execute commit only after user approval
+7. **Next commit**: Before staging next set of changes, confirm with user
+
+## Automation Mode
+
+If user requests "continue to X" or "automate until X":
+- Proceed with atomic commits automatically
+- Resume asking for confirmation when X point reached
+- X can be: specific file, feature completion, test passing, etc.
+
+## Stop and Ask Protocols
+
+Stop and ask user before:
+- Adding type ignores (`@ts-ignore`, `# type: ignore`, etc.)
+- Adding suppressions (ESLint disable, pylint disable, etc.)
+- Using `any` type or similar type escapes
+- Uncertain how to proceed with implementation
+- Requirements are unclear
 
 ## Examples
 
@@ -102,4 +132,6 @@ See docs/api/pagination.md for details.
 
 ## References
 
-For detailed conventional commit format and examples, see `references/conventional-commits.md`.
+For detailed guidance, see:
+- `references/conventional-commits.md` - Commit format and examples
+- `references/ci-verification.md` - CI check patterns and verification

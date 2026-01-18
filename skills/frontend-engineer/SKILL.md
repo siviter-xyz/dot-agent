@@ -56,6 +56,13 @@ Comprehensive guide for modern React development, emphasizing Suspense-based dat
 7. **No Early Returns:** Prevents layout shift
 8. **TypeScript First:** Strict mode, no `any` type
 
+## Implementation Workflow
+
+When implementing frontend code:
+- Check for existing workflow patterns (spec-first, TDD, etc.) and follow them
+- Ensure code passes CI checks (types, tests, lint) before committing
+- Group related changes with tests in atomic commits
+
 ## References
 
 For detailed guidance, see:

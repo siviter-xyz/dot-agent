@@ -61,6 +61,14 @@ SITUATION?
    └─ No fresh verification? → RUN verification command first
 ```
 
+## CI Verification
+
+Before any completion claim or commit:
+- Run CI checks (types, tests, lint)
+- Prefer single CI command if available
+- Verify all checks pass
+- Do not proceed if checks fail
+
 ## References
 
 For detailed protocols, see:

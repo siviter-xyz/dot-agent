@@ -29,26 +29,24 @@ Skip any step = not verifying
 
 Before claiming success, run:
 
+**Preferred: Single CI Command**
 ```bash
-# Tests
-npm test
-# or
-pytest
-# or
-cargo test
+pnpm ci  # or npm run ci, just ci, make ci
+```
 
-# Build
-npm run build
-# or
-go build
-# or
-cargo build
+**Fallback: Individual Checks**
+```bash
+# Type checking
+pnpm typecheck  # or tsc --noEmit, mypy .
+
+# Tests
+pnpm test  # or pytest, cargo test
 
 # Lint
-npm run lint
-# or
-ruff check
+pnpm lint  # or ruff check, cargo clippy
 ```
+
+Always verify CI passes before staging or committing changes.
 
 ## Evidence Format
 

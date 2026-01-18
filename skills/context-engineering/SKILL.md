@@ -60,6 +60,14 @@ Context engineering curates the smallest high-signal token set for LLM tasks. Th
 7. Monitor token usage in production
 8. Start minimal, add complexity only when proven necessary
 
+## Skill Coordination
+
+When multiple skills are active:
+- Load only relevant skill content
+- Use skill metadata for discovery
+- Avoid loading full skill definitions unless needed
+- Reference skills by pattern detection, not direct names
+
 ## References
 
 For detailed guidance, see:

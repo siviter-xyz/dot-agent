@@ -56,6 +56,22 @@ Implement phase can work independently:
 - Follow existing codebase patterns
 - Reference specs from docs for accuracy
 
+### 4. CI Verification
+
+Before considering change complete:
+- Run CI checks (types, tests, lint)
+- Prefer single CI command if available
+- If checks fail, stop and report
+- Only proceed when all checks pass
+
+### 5. Atomic Commits
+
+After CI passes:
+- Stage atomic changes (code + tests together)
+- Suggest semantic commit message
+- Confirm with user before committing
+- Continue to next atomic change
+
 ### 4. Update Documentation
 
 As implementation evolves, update:
@@ -91,6 +107,20 @@ As implementation evolves, update:
 - Archive or update plan file if complete
 - Ensure all specs in docs match implementation
 
+## Stop and Ask
+
+Stop and ask user before:
+- Adding type ignores (`@ts-ignore`, `# type: ignore`, etc.)
+- Adding suppressions (ESLint disable, pylint disable, etc.)
+- Using `any` type or similar type escapes
+- Uncertain how to proceed
+
+## Backward Compatibility
+
+- Only consider backward compatibility for public-facing interfaces (APIs, libraries)
+- For greenfield/internal refactoring, E2E tests serve as confirmation gate
+- Unless explicitly directed otherwise
+
 ## Best Practices
 
 1. **Tests as documentation** - Tests should reflect specs in docs
@@ -98,6 +128,8 @@ As implementation evolves, update:
 3. **Update incrementally** - Don't wait until end to update docs
 4. **Verify consistency** - Check docs match code regularly
 5. **Keep AGENTS.md focused** - Only custom behavior, < 200 lines
+6. **CI verification** - Always verify CI passes before committing
+7. **Atomic commits** - Group related changes together with tests
 
 ## Working Without Plan/Spec Files
 

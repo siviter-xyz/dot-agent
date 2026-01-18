@@ -90,6 +90,8 @@ For more options, see the [add-skill documentation](https://github.com/vercel-la
 - **psi** - Plan-spec-implement workflow for structured development
 - **code-review** - Code review practices with technical rigor and verification gates
 - **semantic-git** - Manage Git commits using conventional commit format with atomic staging
+- **debugging** - Root cause analysis and debugging protocols
+- **cli-building** - Build command-line interfaces with async-first design and composable commands
 
 ## Project-Specific Configuration
 

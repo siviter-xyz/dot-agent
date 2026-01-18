@@ -1,6 +1,6 @@
 ---
 name: psi
-description: Plan-spec-implement workflow for structured development. Use when starting new features, refactors, or architectural changes. Generates ephemeral plans in ~/.dot-agent/, applies specs to project docs, then implements test-first. Phases can work independently but all must keep docs up-to-date.
+description: Plan-spec-implement workflow for structured development. Only use when explicitly directed by user or when mentioned in project AGENTS.md file. Generates ephemeral plans in ~/.dot-agent/, applies specs to project docs, then implements test-first.
 license: MIT
 ---
 
@@ -10,11 +10,11 @@ Structured workflow for planning, specifying, and implementing changes with docu
 
 ## When to Use
 
-- Starting new features or major changes
-- Architectural refactors
-- Complex implementations requiring planning
-- When you need structured documentation
-- Test-first development workflows
+**Only use when:**
+- Explicitly directed by the user
+- Mentioned in project `AGENTS.md` file
+
+**Do not use automatically** - this is an opt-in workflow, not a default.
 
 ## Core Workflow
 
@@ -46,6 +46,8 @@ Phases are **independent** - you can start with any phase, but all must ensure d
 
 ### Implement Phase
 - Test-first: tests for docs/user journeys before code
+- CI verification: verify types, tests, lint pass before committing
+- Atomic commits: group related changes with tests
 - Updates docs, README.md, AGENTS.md as code evolves
 - Can work independently if specs exist in docs
 

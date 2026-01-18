@@ -114,6 +114,13 @@ Apply DRY, KISS, and SOLID consistently. Prefer functional approaches where rele
 - Use `packageManager` field in package.json
 - Use pnpm workspaces for monorepos
 
+## Implementation
+
+When implementing TypeScript code:
+- Ensure code passes type checking before committing
+- Group related changes with tests in atomic commits
+- Check for existing workflow patterns (spec-first, TDD, etc.) and follow them
+
 ## References
 
 For monorepo-specific patterns using pnpm, see `references/pnpm-monorepo.md`.

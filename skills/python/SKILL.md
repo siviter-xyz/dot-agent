@@ -73,6 +73,13 @@ Apply DRY, KISS, and SOLID consistently. Prefer functional methods where relevan
 - Use `conftest.py` for shared fixtures
 - Use `tests/__test_<package_name>__` for shared testing code
 
+## Implementation
+
+When implementing Python code:
+- Ensure code passes type checking and tests before committing
+- Group related changes with tests in atomic commits
+- Check for existing workflow patterns (spec-first, TDD, etc.) and follow them
+
 ## References
 
 For monorepo-specific patterns using uv and Hatch, see `references/uv-monorepo.md`.

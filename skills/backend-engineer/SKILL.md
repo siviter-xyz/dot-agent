@@ -47,6 +47,7 @@ See: `references/technologies.md` for detailed comparisons
 **Quality & Operations:**
 - `references/testing.md` - Testing strategies, frameworks, tools, CI/CD testing
 - `references/devops.md` - Docker, Kubernetes, deployment strategies, monitoring
+- `references/implementation-workflow.md` - Unified implementation workflow
 
 ## Key Best Practices
 
@@ -84,3 +85,7 @@ See: `references/technologies.md` for detailed comparisons
 **Testing:** Unit 70% → Integration 20% → E2E 10% → Load tests → Migration tests → Contract tests (microservices)
 
 **Deployment:** Docker → CI/CD → Blue-green/canary → Feature flags → Monitoring → Logging → Health checks
+
+## Implementation Workflow
+
+When implementing backend code, follow unified implementation workflow patterns. See `references/implementation-workflow.md` for details.
