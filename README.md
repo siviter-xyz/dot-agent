@@ -70,6 +70,23 @@ npx add-skill siviter-xyz/dot-agent --skill psi --yes
 
 For more options, see the [add-skill documentation](https://github.com/vercel-labs/add-skill).
 
+### Sync from Local Repository
+
+When working on dot-agent locally, sync all skills to your local agent installation:
+
+```bash
+# Sync all skills from local dot-agent repo to Cursor
+npx add-skill $(pwd) --yes --global --agent cursor
+
+# Sync to multiple agents
+npx add-skill $(pwd) --yes --global --agent cursor --agent claude-code
+
+# Sync specific skills only
+npx add-skill $(pwd) --skill python --skill typescript --yes --global --agent cursor
+```
+
+This is useful when developing or modifying skills locally before publishing.
+
 ## Available Skills
 
 ### Core Skills
