@@ -32,8 +32,6 @@ confusing or complex behaviour.
 
 - **No git modifications**: Do not use Git commands that modify the repository state (such as `git add`, `git commit`, `git push`) UNLESS directed. Focus on code edits directly. Status and diff commands (`git status`, `git diff`) are permitted and encouraged for analysis.
 
-- **Rational thinking**: Use the sequential-thinking tool to rationalize thoughts and reasoning process when working through complex problems or making architectural decisions.
-
 - **Fact-based approach**: Do not hallucinate or assume. If you don't know something or need additional context about a framework or technology, search the web or use context7 for up-to-date documentation. If clarification is needed, ask the user before making changes.
 
 - **Constructive disagreement**: Do not just accept user direction if a better alternative exists. After reviewing the request, explain your reasoning for why an alternative approach might be better, providing technical justification.
