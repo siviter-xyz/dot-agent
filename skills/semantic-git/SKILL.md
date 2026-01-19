@@ -34,16 +34,16 @@ Manage Git commits using conventional commit format with atomic commits and conc
 
 ### Types
 
-- `feat`: New feature
-- `fix`: Bug fix
-- `test`: Test-only changes (when no implementation code changes)
-- `docs`: Documentation changes
-- `style`: Code style changes (formatting, missing semicolons, etc.)
-- `refactor`: Code refactoring
-- `perf`: Performance improvements
-- `chore`: Build process, tooling, or dependency updates
-- `ci`: CI/CD changes
-- `build`: Build system changes
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc.)
+- `refactor`: A code change that neither fixes a bug nor adds a feature
+- `perf`: A code change that improves performance
+- `test`: Adding missing tests or correcting existing tests
+- `build`: Changes that affect the build system or external dependencies
+- `ci`: Changes to CI configuration files and scripts
+- `chore`: Maintenance tasks (updating build tasks, dependencies, etc.; no production code change)
 - `revert`: Revert a previous commit
 
 ### Breaking Changes
@@ -97,7 +97,7 @@ Stop and ask user before:
 
 ## Examples
 
-**Simple feature:**
+**Simple feature or behaviour change:**
 ```
 feat: add user authentication
 ```
@@ -119,7 +119,12 @@ feat!: migrate to new API version
 
 **Test-only change:**
 ```
-test: add unit tests for auth service
+test: improve unit tests for auth service
+```
+
+**Refactor (no behavior change):**
+```
+refactor: extract validation logic into separate function
 ```
 
 **Complex change (with body):**

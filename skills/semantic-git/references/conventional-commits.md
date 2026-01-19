@@ -26,11 +26,6 @@ Detailed reference for conventional commit message format.
 - Includes fix and tests together
 - Example: `fix: resolve null pointer in user service`
 
-**test**: Test-only changes
-- Only when no implementation code changes
-- Adding, updating, or removing tests without code changes
-- Example: `test: add edge case tests for auth`
-
 ### Documentation
 
 **docs**: Documentation only changes
@@ -39,37 +34,43 @@ Detailed reference for conventional commit message format.
 
 ### Code Quality
 
-**style**: Code style changes
-- Formatting, whitespace, semicolons
+**style**: Changes that do not affect the meaning of the code
+- White-space, formatting, missing semi-colons, etc.
 - No logic changes
 - Example: `style: format code with prettier`
 
-**refactor**: Code refactoring
+**refactor**: A code change that neither fixes a bug nor adds a feature
 - Restructuring without changing behavior
+- **Never use for behavior changes** - use `feat` or `fix` instead
 - Example: `refactor: extract validation logic`
 
-**perf**: Performance improvements
+**perf**: A code change that improves performance
 - Optimizations that improve performance
 - Example: `perf: optimize database queries`
 
-### Maintenance
+**test**: Adding missing tests or correcting existing tests
+- Only when no implementation code changes
+- Adding, updating, or removing tests without code changes
+- Example: `test: add edge case tests for auth`
 
-**chore**: Maintenance tasks
-- Build process, tooling, dependencies
+### Build and Infrastructure
+
+**build**: Changes that affect the build system or external dependencies
+- Webpack, Vite, tsconfig changes
+- Example: `build: update Vite config`
+
+**ci**: Changes to CI configuration files and scripts
+- GitHub Actions, CI configs
+- Example: `ci: add test coverage job`
+
+**chore**: Maintenance tasks (no production code change)
+- Updating build tasks, dependencies, etc.
 - Prefer **small, focused dependency bumps** over blanket upgrades. When updating dependencies:
   - Group small related updates together where possible
   - Keep breaking or risky upgrades in their own commits
 - Example commit subjects:
   - `chore: bump P to x.y.z`
   - `chore: bump lockfile` or `chore: bump dependencies`
-
-**ci**: CI/CD changes
-- GitHub Actions, CI configs
-- Example: `ci: add test coverage job`
-
-**build**: Build system changes
-- Webpack, Vite, tsconfig changes
-- Example: `build: update Vite config`
 
 **revert**: Revert previous commit
 - Example: `revert: revert "feat: add user auth"`
