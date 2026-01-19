@@ -56,7 +56,12 @@ Detailed reference for conventional commit message format.
 
 **chore**: Maintenance tasks
 - Build process, tooling, dependencies
-- Example: `chore: update dependencies`
+- Prefer **small, focused dependency bumps** over blanket upgrades. When updating dependencies:
+  - Group small related updates together where possible
+  - Keep breaking or risky upgrades in their own commits
+- Example commit subjects:
+  - `chore: bump P to x.y.z`
+  - `chore: bump lockfile` or `chore: bump dependencies`
 
 **ci**: CI/CD changes
 - GitHub Actions, CI configs
@@ -76,7 +81,11 @@ Optional scope indicates what part of codebase is affected:
 - `fix(ui): resolve button styling`
 - `refactor(auth): simplify login flow`
 
-Use when it adds clarity. Omit if obvious from context.
+**For monorepos/subpackages**: If work is in a subpackage, use the subpackage name as the scope, removing any project prefix:
+- ✅ `feat(api): add endpoint` (not `feat(project-api)` or `feat(@project/api)`)
+- ✅ `refactor(core): simplify login flow` (not `refactor(@myorg/core)`)
+
+Use when it adds clarity. Omit if obvious from context or many areas are touched in the change.
 
 ## Breaking Changes
 
