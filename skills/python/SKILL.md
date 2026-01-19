@@ -82,4 +82,5 @@ When implementing Python code:
 
 ## References
 
-For monorepo-specific patterns using uv and Hatch, see `references/uv-monorepo.md`.
+- For adhoc Python scripts in uv-managed projects, see `references/uv-scripts.md`.
+- For monorepo-specific patterns using uv and Hatch, see `references/uv-monorepo.md`.
