@@ -65,7 +65,7 @@ Stop and ask user before:
 ## Backward Compatibility
 
 - **Public interfaces**: Consider backward compatibility for APIs, libraries
-- **Internal refactoring**: E2E tests serve as confirmation gate
+- **Internal refactoring**: Unit, integration, and E2E tests serve as confirmation gate
 - **Greenfield**: No backward compatibility needed unless directed
 
 ## Automation
