@@ -89,34 +89,15 @@ This is useful when developing or modifying skills locally before publishing.
 
 ## Available Skills
 
-### Core Skills
-
-- **software-engineer** - Core software engineering principles
-- **backend-engineer** - Production-ready backend development with modern technologies
-- **frontend-engineer** - Frontend development guidelines for React/TypeScript
-- **typescript** - TypeScript standards and best practices
-- **python** - Python development guidelines (includes uv monorepo patterns)
-- **astroflare** - Astro x Tailwind v4 on Cloudflare Workers
-- **context-engineering** - Context engineering for AI agent systems
-
-### Meta Skills
-
-- **create-skill** - Guide for creating effective skills
-- **create-agents-md** - Create AGENTS.md files for project-specific rules
-- **cursor-best-practices** - Best practices for working with Cursor
-- **psi** - Plan-spec-implement workflow for structured development
-- **code-review** - Code review practices with technical rigor and verification gates
-- **semantic-git** - Manage Git commits using conventional commit format with atomic staging
-- **debugging** - Root cause analysis and debugging protocols
-- **cli-building** - Build command-line interfaces with async-first design and composable commands
+See [skills/README.md](skills/README.md) for a complete list of available skills.
 
 ## Project-Specific Configuration
 
 For project-specific rules and commands, commit them in your repository:
 
+- **AGENTS.md**: Project root or subdirectories for inline rules (works across agent harnesses, **PREFERRRED**)
 - **Rules**: `.cursor/rules/`, `.claude/rules/`, `.codex/rules/`, etc. in your repo
 - **Commands**: `.cursor/commands/`, `.claude/commands/`, `.codex/commands/`, etc. in your repo
-- **AGENTS.md**: Project root or subdirectories for inline rules (works across agent harnesses)
 
 Keep project-specific content small and focused. Use skills for reusable knowledge.
 
