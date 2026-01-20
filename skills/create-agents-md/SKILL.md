@@ -41,14 +41,18 @@ AGENTS.md is a simple markdown file without metadata:
 
 ## Location
 
-- **Project root**: `AGENTS.md` - Global project instructions
-- **Subdirectories**: `subdirectory/AGENTS.md` - Folder-scoped instructions
-- **Nested support**: Instructions from nested files combine with parent directories
+- **Project root**: `AGENTS.md` – Primary, inline instructions and references for the whole project (commands, tech stack, testing, code style, architecture, safety boundaries).
+- **Subdirectories**: `subdirectory/AGENTS.md` – Folder- or package-scoped instructions when local behavior meaningfully diverges from the root (e.g., a specific package, service, or test tree).
+- **Nested support**: Agents typically combine instructions from the closest `AGENTS.md` with parent ones; keep root general and use nested `AGENTS.md` only where you truly need more specific rules.
 
 ## Best Practices
 
 - Keep AGENTS.md files small and focused
 - Use for project-specific conventions
+- Prefer **short, concrete references** over long prose:
+  - Link to project docs, specs, and runbooks
+  - Point to example files or directories (e.g., `see src/api/users.ts for canonical pattern`)
+  - Include the most important commands with exact CLI invocations
 - Reference existing code examples when possible
 - Update as project evolves
 

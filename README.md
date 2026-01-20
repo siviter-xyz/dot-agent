@@ -141,8 +141,13 @@ Skills are designed to be:
 When contributing:
 1. Keep SKILL.md under 200 lines
 2. Use references/ for detailed content
-3. Follow existing skill structure
-4. Test installation and usage
+3. Follow existing skill structure and the [Agent Skills specification](https://agentskills.io/specification)
+4. Prefer agent-harness agnostic skills; if a skill is environment-specific, document this clearly in its frontmatter and/or README
+5. For scripts inside skills:
+   - Prefer **uv scripts** (PEP 723 `# /// script` metadata with `#!/usr/bin/env -S uv run --script`) or **plain Bash** for simple glue
+   - Aim for cross-platform behavior (Linux, macOS; avoid hard-coding shell- or OS-specific paths)
+   - Recommend installing [`uv`](https://docs.astral.sh/uv/) locally and running scripts via `uv run` where appropriate
+6. Test installation and usage
 
 ## References & Inspiration
 
