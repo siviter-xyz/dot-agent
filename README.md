@@ -142,4 +142,3 @@ When contributing:
 
 - [vercel-labs/add-skill](https://github.com/vercel-labs/add-skill)
 - [mrgoonie/claudekit-skills](https://github.com/mrgoonie/claudekit-skills)
-- Old [siviter-t/dot-cursor](https://github.com/siviter-t/dot-cursor)
