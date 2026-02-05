@@ -27,15 +27,19 @@
 
 ### Project Root AGENTS.md
 
-- Global project conventions
-- Overall architecture
-- Common patterns
+- Single source of truth for **global project conventions**
+- Overall architecture and key domain concepts
+- Primary commands: build, test, lint, typecheck, format
+- Tech stack details (framework versions, package managers)
+- Safety boundaries (what the agent must not touch: secrets, vendor dirs, prod configs)
 
 ### Folder-Scoped AGENTS.md
 
-- Directory-specific rules
+- Only add when a directory/package has **meaningfully different rules** than the root
+- Directory-specific rules (e.g., `apps/web/`, `packages/api/`, `infra/`)
 - Package-specific instructions (in monorepos)
-- Test-specific guidance
+- Test-specific guidance (e.g., how to run slow/integration tests locally)
+- Avoid duplicating root content; reference root conventions and add only the deltas
 
 ## Examples
 
@@ -60,3 +64,13 @@
 - Follow SOLID principles
 - [500 lines of generic advice]
 ```
+
+## Additional Online Guidance
+
+These practices align with the broader AGENTS.md ecosystem:
+
+- Use a **root AGENTS.md** as the main “instruction budget” for the project, then add nested AGENTS.md files only where local context really matters.
+- Prefer **concrete examples and commands** over long prose; show exactly how to run tests or format code.
+- Clearly define **permissions and boundaries** (what the agent can always do vs. what requires explicit user confirmation).
+- Avoid auto-generating AGENTS.md from templates or scripts; keep it curated and project-specific instead.
+

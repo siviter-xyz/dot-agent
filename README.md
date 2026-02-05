@@ -21,8 +21,10 @@ Skills use **progressive disclosure** - keeping SKILL.md files under 200 lines w
 Install all skills globally (to `~/.cursor/skills/`, `~/.claude/skills/`, etc. depending on agent):
 
 ```bash
-npx add-skill siviter-xyz/dot-agent --yes --global --agent cursor
+npx skills add siviter-xyz/dot-agent --global --agent cursor
 ```
+
+By default, `npx skills` will prompt before installing or updating skills. You can add `--yes` (or `-y`) to skip confirmations.
 
 ### Install Specific Skills
 
@@ -30,18 +32,24 @@ Install individual skills by name:
 
 ```bash
 # Install a single skill
-npx add-skill siviter-xyz/dot-agent --skill typescript --yes --global
+npx skills add siviter-xyz/dot-agent --skill typescript --global
 
 # Install multiple specific skills
-npx add-skill siviter-xyz/dot-agent --skill typescript --skill python --skill astroflare --yes --global
+npx skills add siviter-xyz/dot-agent --skill typescript --skill python --skill astroflare --global
 ```
 
 ### List Available Skills
 
-See all available skills without installing:
+See all available skills in this repository without installing:
 
 ```bash
-npx add-skill siviter-xyz/dot-agent --list
+npx skills add siviter-xyz/dot-agent --list
+```
+
+To discover skills across the broader ecosystem, use the built-in `skills find` command (powered by the internal `find-skills` helper skill; you don't need to install it separately):
+
+```bash
+npx skills find dot-agent
 ```
 
 ### Install to Specific Agents
@@ -50,10 +58,10 @@ Target specific agent harnesses:
 
 ```bash
 # Install to Cursor only
-npx add-skill siviter-xyz/dot-agent -a cursor --yes --global
+npx skills add siviter-xyz/dot-agent --agent cursor --global
 
 # Install to multiple agents
-npx add-skill siviter-xyz/dot-agent -a cursor -a claude-code --yes --global
+npx skills add siviter-xyz/dot-agent --agent cursor --agent claude-code --global
 ```
 
 ### Project-Level Installation
@@ -62,13 +70,13 @@ Install skills to your project (committed in repo):
 
 ```bash
 # Install all skills to project
-npx add-skill siviter-xyz/dot-agent --yes
+npx skills add siviter-xyz/dot-agent
 
 # Install specific skill to project
-npx add-skill siviter-xyz/dot-agent --skill psi --yes
+npx skills add siviter-xyz/dot-agent --skill psi
 ```
 
-For more options, see the [add-skill documentation](https://github.com/vercel-labs/add-skill).
+For more options, see the [skills CLI documentation](https://github.com/vercel-labs/skills).
 
 ### Sync from Local Repository
 
@@ -76,47 +84,28 @@ When working on dot-agent locally, sync all skills to your local agent installat
 
 ```bash
 # Sync all skills from local dot-agent repo to Cursor
-npx add-skill $(pwd) --yes --global --agent cursor
+npx skills add "$(pwd)" --global --agent cursor
 
 # Sync to multiple agents
-npx add-skill $(pwd) --yes --global --agent cursor --agent claude-code
+npx skills add "$(pwd)" --global --agent cursor --agent claude-code
 
 # Sync specific skills only
-npx add-skill $(pwd) --skill python --skill typescript --yes --global --agent cursor
+npx skills add "$(pwd)" --skill python --skill typescript --global --agent cursor
 ```
 
 This is useful when developing or modifying skills locally before publishing.
 
 ## Available Skills
 
-### Core Skills
-
-- **software-engineer** - Core software engineering principles
-- **backend-engineer** - Production-ready backend development with modern technologies
-- **frontend-engineer** - Frontend development guidelines for React/TypeScript
-- **typescript** - TypeScript standards and best practices
-- **python** - Python development guidelines (includes uv monorepo patterns)
-- **astroflare** - Astro x Tailwind v4 on Cloudflare Workers
-- **context-engineering** - Context engineering for AI agent systems
-
-### Meta Skills
-
-- **create-skill** - Guide for creating effective skills
-- **create-agents-md** - Create AGENTS.md files for project-specific rules
-- **cursor-best-practices** - Best practices for working with Cursor
-- **psi** - Plan-spec-implement workflow for structured development
-- **code-review** - Code review practices with technical rigor and verification gates
-- **semantic-git** - Manage Git commits using conventional commit format with atomic staging
-- **debugging** - Root cause analysis and debugging protocols
-- **cli-building** - Build command-line interfaces with async-first design and composable commands
+See [skills/README.md](skills/README.md) for a complete list of available skills.
 
 ## Project-Specific Configuration
 
 For project-specific rules and commands, commit them in your repository:
 
+- **AGENTS.md**: Project root or subdirectories for inline rules (works across agent harnesses, **PREFERRRED**)
 - **Rules**: `.cursor/rules/`, `.claude/rules/`, `.codex/rules/`, etc. in your repo
 - **Commands**: `.cursor/commands/`, `.claude/commands/`, `.codex/commands/`, etc. in your repo
-- **AGENTS.md**: Project root or subdirectories for inline rules (works across agent harnesses)
 
 Keep project-specific content small and focused. Use skills for reusable knowledge.
 
@@ -141,8 +130,13 @@ Skills are designed to be:
 When contributing:
 1. Keep SKILL.md under 200 lines
 2. Use references/ for detailed content
-3. Follow existing skill structure
-4. Test installation and usage
+3. Follow existing skill structure and the [Agent Skills specification](https://agentskills.io/specification)
+4. Prefer agent-harness agnostic skills; if a skill is environment-specific, document this clearly in its frontmatter and/or README
+5. For scripts inside skills:
+   - Prefer **uv scripts** (PEP 723 `# /// script` metadata with `#!/usr/bin/env -S uv run --script`) or **plain Bash** for simple glue
+   - Aim for cross-platform behavior (Linux, macOS; avoid hard-coding shell- or OS-specific paths)
+   - Recommend installing [`uv`](https://docs.astral.sh/uv/) locally and running scripts via `uv run` where appropriate
+6. Test installation and usage
 
 ## References & Inspiration
 
