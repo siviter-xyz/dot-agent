@@ -35,7 +35,7 @@ Install individual skills by name:
 npx skills add siviter-xyz/dot-agent --skill typescript --global
 
 # Install multiple specific skills
-npx skills add siviter-xyz/dot-agent --skill typescript --skill python --skill astroflare --global
+npx skills add siviter-xyz/dot-agent --skill typescript --skill python --skill context-engineering --global
 ```
 
 ### List Available Skills

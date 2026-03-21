@@ -7,7 +7,6 @@
 - [**frontend-engineer**](frontend-engineer/SKILL.md) - Frontend development guidelines for React/TypeScript
 - [**typescript**](typescript/SKILL.md) - TypeScript standards and best practices
 - [**python**](python/SKILL.md) - Python development guidelines (includes uv monorepo patterns)
-- [**astroflare**](astroflare/SKILL.md) - Astro x Tailwind v4 on Cloudflare Workers
 - [**context-engineering**](context-engineering/SKILL.md) - Context engineering for AI agent systems
 - [**media-processing**](media-processing/SKILL.md) - Media processing utilities for images, audio, and video using FFmpeg and ImageMagick
 
