@@ -1,86 +1,97 @@
 ---
 name: python
-description: Python development guidelines and best practices. Use when working with Python code.
+description: "Enforce Python typing conventions, Pydantic v2 data models, Protocol-based dependency injection, and pytest testing patterns. Use when writing or reviewing Python code, setting up Python project structure, configuring type hints, creating Pydantic models, or writing pytest test suites."
 ---
 
 # Python Guidelines
 
-Standards and best practices for Python development. Follow these guidelines when writing or modifying Python code.
-
-## Design Principles
-
-Apply DRY, KISS, and SOLID consistently. Prefer functional methods where relevant; use classes for stateful behavior. Use composition with Protocol classes for interfaces rather than inheritance. Each module should have a single responsibility. Use dependency injection for class dependencies.
-
-## Code Style
-
-- **Naming**: Descriptive yet concise names for variables, methods, and classes
-- **Documentation**: Docstrings for all classes, functions, enums, enum values
-- **Type hints**: Use consistently; avoid `Any` unless necessary
-- **Imports**: Avoid barrel exports in `__init__.py`; prefer blank files
+Conventions for Python code style, typing, architecture, and testing in this project.
 
 ## Type Annotations
 
-- Use `dict`, `list` instead of `typing.Dict`, `typing.List`
-- Use `str | None` instead of `Optional[str]`
-- Include `from __future__ import annotations` at top of files with type hints
-- Prefer built-in types over typing module equivalents
+```python
+from __future__ import annotations
+
+# Preferred: built-in generics + union syntax
+def fetch(url: str, timeout: int | None = None) -> dict[str, list[str]]:
+    ...
+```
+
+- Always include `from __future__ import annotations`
+- Use `str | None` not `Optional[str]`; `dict`, `list` not `typing.Dict`, `typing.List`
+- Avoid `Any` unless genuinely required
 
 ## Architecture
 
-### Dependency Injection
+### Dependency Injection with Protocol
 
-- Always inject dependencies via constructors or methods when using classes
-- One service class per module (interface and class models allowed in addition)
-- Use Protocol classes to define interfaces for dependency injection and testing
+```python
+from typing import Protocol
 
-### Module Organization
+class Storage(Protocol):
+    def save(self, key: str, data: bytes) -> None: ...
 
-- Each module focuses on one concern with clear boundaries
-- Extract reusable methods to avoid duplication
-- Design for reusability across contexts
+class UserService:
+    def __init__(self, storage: Storage) -> None:
+        self._storage = storage
+```
+
+- Inject dependencies via constructors; define interfaces with `Protocol`
+- One service class per module; prefer composition over inheritance
+
+### Data Models (Pydantic v2)
+
+```python
+from pydantic import BaseModel
+
+class UserCreate(BaseModel):
+    name: str
+    email: str
+    role: str = "member"
+```
+
+- Use Pydantic v2 for all schemas, validation, and configuration
+- Use for API request/response schemas, config objects, and DTOs
 
 ### Environment Variables
 
-- Use an `environment.py` file with individual methods per variable (e.g., `api_key()` for `API_KEY`, `database_url()` for `DATABASE_URL`)
-- Co-locate all environment access in one place per package for easier mocking in tests
+- Centralize access in `environment.py` with one function per variable (e.g. `def api_key() -> str`)
+- Simplifies mocking in tests
 
-### Data Models
+### Module Organization
 
-- Use Pydantic v2 for schemas, validation, and data models
-- Leverage Pydantic's type validation, serialization, and configuration management
-- Use Pydantic models for API request/response schemas, configuration objects, and data transfer objects
+- One concern per module with clear boundaries
+- Avoid barrel exports in `__init__.py` — prefer blank files
+- Docstrings on all public classes, functions, and enums
 
 ## Testing
 
-### Structure
+```python
+import pytest
 
-- Tests mirror `src/` directory structure
-- Test methods start with `test_`
-- Use test class suites: for `def foo()` create `class TestFoo`
-- Keep names concise, omit class suite name from method
-- Always check for appropriate unit tests when changing code
+class TestUserService:
+    def test_creates_user(self, mock_storage):
+        # Arrange
+        service = UserService(storage=mock_storage)
+        # Act
+        result = service.create("Alice")
+        # Assert
+        assert result.name == "Alice"
+```
 
-### Quality
+- Mirror `src/` structure; `class TestFoo` for `def foo()`
+- Prefer `pytest` + `pytest-mock`; shared fixtures in `conftest.py`
+- Follow AAA (Arrange, Act, Assert) pattern
 
-- Use AAA (Arrange, Act, Assert) pattern
-- Tests should be useful, readable, concise, maintainable
-- Avoid tests that create massive diffs or become burdensome
+## Implementation Checklist
 
-### Tools
-
-- Prefer `pytest` over `unittest`
-- Use `pytest-mock` for mocking
-- Use `conftest.py` for shared fixtures
-- Use `tests/__test_<package_name>__` for shared testing code
-
-## Implementation
-
-When implementing Python code:
-- Ensure code passes type checking and tests before committing
-- Group related changes with tests in atomic commits
-- Check for existing workflow patterns (spec-first, TDD, etc.) and follow them
+1. Write or modify code following conventions above
+2. Run type checker: `mypy .` or `pyright`
+3. Run tests: `pytest`
+4. Fix any failures before committing
+5. Group related changes with tests in atomic commits
 
 ## References
 
-- For adhoc Python scripts in uv-managed projects, see `references/uv-scripts.md`.
-- For monorepo-specific patterns using uv and Hatch, see `references/uv-monorepo.md`.
+- `references/uv-scripts.md` - Adhoc Python scripts in uv-managed projects
+- `references/uv-monorepo.md` - Monorepo patterns using uv and Hatch
