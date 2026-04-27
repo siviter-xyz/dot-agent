@@ -1,144 +1,67 @@
 ---
 name: cli-building
-description: Build command-line interfaces with async-first design, composable commands, and proper output formatting. Use when creating CLI tools, commands, or interactive terminal applications.
+description: "Scaffold CLI tools with argument parsing, subcommands, async I/O, and formatted terminal output using stricli (TypeScript) or cyclopts (Python). Use when creating a new CLI tool, adding subcommands to an existing CLI, building an interactive terminal application, or selecting a CLI framework."
 ---
 
 # CLI Building
 
-Guidelines for building command-line interfaces with modern patterns and best practices.
+Build command-line interfaces with async-first I/O, composable subcommands, and proper terminal output.
 
-## When to Use
+## CLI Creation Workflow
 
-- Creating new CLI tools or commands
-- Building interactive terminal applications
-- Adding commands to existing projects
-- Implementing command-line interfaces
-- Working with CLI frameworks
+1. **Choose framework** — stricli (TS) or cyclopts (Python) for async-first; oclif or typer as alternatives
+2. **Define command tree** — top-level app → subcommand groups → leaf commands
+3. **Implement async handlers** — all file, network, and process I/O via async/await
+4. **Format output** — unicode status symbols (✓ ✗ → ⚠), color via libraries, respect `NO_COLOR`
+5. **Test in isolation** — unit-test each command handler independently of the CLI harness
 
-## Core Principles
+## Quick-Start Examples
 
-- **Async-first**: All I/O operations should be async/await, avoid blocking operations
-- **Composable commands**: Commands should be modular and reusable, use command composition
-- **Strategy pattern**: Use strategy pattern for branching workflows or task-based commands
-- **Output formatting**: Proper formatting with unicode symbols and color support
-
-## Framework Selection
-
-### TypeScript/JavaScript
-
-**stricli** (`@bloomberg/stricli`, recommended for modern async-first CLIs):
-- Built for async/await from ground up
-- Type-safe command definitions with full type inference
-- Lazy loading for startup performance
-- Zero dependencies
-
-**oclif** (alternative):
-- Mature framework with extensive features
-- Plugin system
-- Good for complex CLIs
-
-### Python
-
-**cyclopts** (recommended for async-first):
-- Modern async-first CLI framework
-- Type-safe with excellent async support
-- Clean API design
-
-**typer** (when fully async support available):
-- Based on Python type hints
-- Clean and intuitive
-- Good for simple to medium complexity CLIs
-
-## Command Architecture
-
-### Composable Commands
-
-Design commands as reusable modules:
-- Shared command utilities
-- Command middleware
-- Reusable command modules
-- Command composition patterns
-
-### Strategy Pattern
-
-Use strategy pattern for:
-- Workflow branching
-- Task-based commands
-- Dynamic command routing
-- Conditional command execution
-
-## Output Formatting
-
-- **No emojis**: Do not use emojis unless explicitly directed
-- **Unicode symbols**: Use unicode symbols (✓, ✗, →, ⚠) for status indicators
-- **Color support**: Use color libraries, never hardcoded ANSI codes
-- **NO_COLOR**: Always respect `NO_COLOR` environment variable
-- **Formatting**: Use formatting for better readability (bold, dim, etc.)
-
-## Async Patterns
-
-### Async-First Design
-
-All I/O should be async:
-- File operations: use async file APIs
-- Network requests: use async HTTP clients
-- Process execution: use async process APIs
-- Database operations: use async database clients
-
-### Error Handling
-
-Handle async errors properly:
-- Use try/catch with await
-- Handle promise rejections
-- Provide clear error messages
-- Exit with appropriate codes
-
-## Command Structure
-
-### Basic Command
+### TypeScript (stricli)
 
 ```typescript
-// stricli example
-import { createCli } from '@bloomberg/stricli';
+import { buildApplication, buildCommand } from "@stricli/core";
 
-async function myCommand() {
-  // Async implementation
-}
-
-const cli = createCli({
-  name: 'my-cli',
-  commands: {
-    'my-command': myCommand
-  }
+const greet = buildCommand({
+  docs: { brief: "Greet a user" },
+  parameters: { positional: { kind: "tuple", parameters: [{ brief: "name", parse: String }] } },
+  func: async (_flags, name) => {
+    console.log(`Hello, ${name}!`);
+  },
 });
 
-cli.run();
+const app = buildApplication(greet, { name: "my-cli", versionInfo: { currentVersion: "1.0.0" } });
+export default app;
 ```
 
-```python
-# cyclopts example
-from cyclopts import App
+### Python (cyclopts)
 
-app = App()
+```python
+import cyclopts
+
+app = cyclopts.App(name="my-cli")
 
 @app.default
-async def my_command():
-    # Async implementation
-    pass
+async def greet(name: str):
+    """Greet a user."""
+    print(f"Hello, {name}!")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app()
 ```
 
-## Best Practices
+## Output Formatting Rules
 
-1. **Async by default**: All operations should be async
-2. **Composable design**: Build reusable command modules
-3. **Strategy pattern**: Use for workflow branching
-4. **Proper formatting**: Unicode symbols and color with NO_COLOR support
-5. **Error handling**: Clear error messages and exit codes
-6. **Type safety**: Use TypeScript types or Python type hints
-7. **Testing**: Test commands in isolation
+- **No emojis** unless explicitly directed
+- **Unicode symbols** for status: ✓ success, ✗ failure, → action, ⚠ warning
+- **Color via libraries** (chalk, rich) — never hardcode ANSI escape codes
+- **Always respect `NO_COLOR`** environment variable
+
+## Composable Command Patterns
+
+- Extract shared logic (auth, config loading) into reusable middleware or utility functions
+- Use the strategy pattern when a command branches into distinct workflows based on input
+- Keep leaf commands focused — one responsibility per handler
 
 ## References
 

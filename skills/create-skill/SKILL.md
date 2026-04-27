@@ -1,73 +1,71 @@
 ---
 name: create-skill
-description: Guide for creating effective skills following best practices. Use when creating or updating skills that extend agent capabilities.
+description: "Scaffold and validate agent skill packages with proper YAML frontmatter, progressive disclosure structure, and references directories. Use when creating a new SKILL.md file, updating an existing skill's metadata or structure, writing custom agent instructions, or converting documentation into a skill format."
 ---
 
 # Create Skill
 
-Guide for creating effective skills that extend agent capabilities with specialized knowledge, workflows, and tool integrations.
+Create well-structured agent skill packages with valid frontmatter, progressive disclosure, and bundled resources.
 
-## About Skills
+## Skill Creation Workflow
 
-Skills are modular, self-contained packages that extend agent capabilities by providing specialized knowledge, workflows, and tools. Think of them as "onboarding guides" for specific domains or tasks.
+1. **Create directory**: `mkdir -p skill-name/{references,scripts,assets}`
+2. **Write SKILL.md** with YAML frontmatter and markdown body (see template below)
+3. **Move detailed content** to `references/` — keep SKILL.md under 200 lines
+4. **Validate structure**: frontmatter has `name` + `description`, body is present, line count ≤ 200
+5. **Test activation**: verify the skill triggers correctly with target agent harness
 
-### What Skills Provide
+## SKILL.md Template
 
-1. Specialized workflows - Multi-step procedures for specific domains
-2. Tool integrations - Instructions for working with specific file formats or APIs
-3. Domain expertise - Company-specific knowledge, schemas, business logic
-4. Bundled resources - Scripts, references, and assets for complex and repetitive tasks
-
-## Progressive Disclosure Principle
-
-**The 200-line rule is critical.** SKILL.md must be under 200 lines. If you need more, split content into `references/` files.
-
-### Three-Level Loading System
-
-1. **Metadata (name + description)** - Always in context (~100 words)
-2. **SKILL.md body** - When skill triggers (<200 lines, ideally <500 lines for optimal performance)
-3. **Bundled resources** - As needed by agent (unlimited)
-
-### Why Progressive Disclosure Matters
-
-- 85% reduction in initial context load
-- Activation times drop from 500ms+ to under 100ms
-- Agent loads only what's needed, when it's needed
-- Skills remain maintainable and focused
-
-## Skill Structure
-
-```
-skill-name/
-├── SKILL.md (required, <200 lines)
-│   ├── YAML frontmatter metadata (required)
-│   │   ├── name: (required)
-│   │   └── description: (required)
-│   └── Markdown instructions (required)
-└── Bundled Resources (optional)
-    ├── scripts/          - Executable code
-    ├── references/       - Documentation loaded as needed
-    └── assets/           - Files used in output
+```yaml
+---
+name: my-skill-name
+description: "Concrete actions this skill performs. Use when [specific trigger scenarios]."
+---
 ```
 
-## Core Principles
+```markdown
+# Skill Title
 
-### Concise is Key
+One-line summary of what this skill does.
 
-The context window is a shared resource. Your skill shares it with everything else the agent needs. Be concise and challenge each piece of information:
-- Does the agent really need this explanation?
-- Can I assume the agent knows this?
-- Does this paragraph justify its token cost?
+## When to Activate
+- [Specific trigger scenario 1]
+- [Specific trigger scenario 2]
 
-### Set Appropriate Degrees of Freedom
+## Core Workflow
+1. Step with validation checkpoint
+2. Step with concrete example
+3. Step with verification
 
-- **High freedom**: Text-based instructions for multiple valid approaches
-- **Medium freedom**: Pseudocode or scripts with parameters
-- **Low freedom**: Specific scripts with few/no parameters for fragile operations
+## References
+- `references/detailed-guide.md` - Extended guidance
+```
 
-### Test with All Models
+## Frontmatter Rules
 
-Skills act as additions to models, so effectiveness depends on the underlying model. Test your skill with all models you plan to use it with.
+- `name`: required, kebab-case (e.g. `my-skill`)
+- `description`: required, quoted string — include concrete actions and a `"Use when..."` clause
+- Optional: `compatibility`, `allowed-tools`, `license`, `metadata`
+
+## Progressive Disclosure
+
+Keep SKILL.md as a concise overview. Delegate detail:
+
+| Content type | Location | Limit |
+|---|---|---|
+| Core principles, workflow | `SKILL.md` | < 200 lines |
+| Detailed guides, examples | `references/` | Unlimited |
+| Executable automation | `scripts/` | Unlimited |
+| Templates, outputs | `assets/` | Unlimited |
+
+## Quality Checklist
+
+- [ ] `name` is kebab-case and matches directory name
+- [ ] `description` lists concrete actions + `"Use when..."` clause
+- [ ] Body has actionable workflow with at least one concrete example
+- [ ] SKILL.md ≤ 200 lines; heavy content in `references/`
+- [ ] References are one level deep and clearly signaled
 
 ## References
 

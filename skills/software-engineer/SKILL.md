@@ -1,72 +1,57 @@
 ---
 name: software-engineer
-description: Core software engineering principles for code style, documentation, and development workflow. Applies when editing code, working in software repositories, or performing software development tasks.
+description: "Enforce self-documenting naming conventions, clean commit hygiene (no stale TODO/FIXME markers), structured detect-change-verify development workflows, and NO_COLOR-compliant terminal output formatting. Use when reviewing naming or comment quality, detecting a project's existing workflow patterns (spec-first, TDD), deciding when to stop and ask the user for clarification, or configuring terminal output formatting rules."
 ---
 
 # Software Engineering Principles
 
-Core principles and preferences for code style, documentation, and development workflow.
+Cross-cutting conventions for code style, documentation, development workflow, and output formatting.
 
-## Code Style and Patterns
+## Code Style
 
-- **Avoid unnecessary comments**: Code should be self-documenting. Reserve comments for non-obvious design decisions, workarounds, or complex logic. Avoid comments that restate what the code obviously does.
+- **Self-documenting code**: Use clear naming and structure; reserve comments for non-obvious design decisions only
+- **No stale markers**: Do not leave TODO/FIXME in committed code unless directed — implement, file an issue, or delete
+- **Follow existing patterns**: Match established conventions in the codebase before introducing new ones
+- **Single responsibility**: Each function and component has one clear purpose
 
-- **Clean codebase**: Avoid leaving TODO, FIXME, or temporary comments in committed code UNLESS directed. Either implement the feature, create an issue, or remove the comment. Ignore existing ones.
+```diff
+# Bad — comment restates the code
+- user = get_user(id)  # get the user by id
 
-- **Self-documenting code**: Prefer clear naming and structure over explanatory comments. Method, class, and member documentation should use language/stack best practices. Don't add useless inline comments next to statements UNLESS they explain
-confusing or complex behaviour.
-
-## Documentation
-
-- **Concise and useful**: Documentation should be informative but not verbose. READMEs should focus on essential information without unnecessary elaboration.
-
-- **Structure over verbosity**: Prefer well-organized, scannable documentation with clear headings over long paragraphs. Use short examples to illustrate concepts.
+# Good — comment explains non-obvious "why"
++ user = get_user(id)  # cached; DB call only on first access per request
+```
 
 ## Development Workflow
 
-- **Workflow detection**: Check if project uses spec-first, TDD, or other structured workflows. Look for:
-  - `docs/` or `specs/` directories with specs
-  - Test-first patterns in codebase
-  - Plan files or structured documentation
-  - Follow existing workflow patterns when present
+1. **Detect project workflow**: Check for `docs/`, `specs/`, test-first patterns, or plan files — follow existing workflow when present
+2. **Make changes**: Edit code directly; do not run `git add`/`commit`/`push` unless directed
+3. **Verify**: Run the project's test and lint commands; if they fail, fix and re-run before proceeding
+4. **Review diff**: Confirm changes match intent before handing back
 
-- **No git modifications**: Do not use Git commands that modify the repository state (such as `git add`, `git commit`, `git push`) UNLESS directed. Focus on code edits directly. Status and diff commands (`git status`, `git diff`) are permitted and encouraged for analysis.
+### Stop and Ask
 
-- **Fact-based approach**: Do not hallucinate or assume. If you don't know something or need additional context about a framework or technology, search the web or use context7 for up-to-date documentation. If clarification is needed, ask the user before making changes.
+Pause and confirm with the user when:
+- Uncertain how to proceed or requirements are ambiguous
+- About to add type ignores, suppressions, or `any` types
+- A better alternative exists but needs confirmation
 
-- **Constructive disagreement**: Do not just accept user direction if a better alternative exists. After reviewing the request, explain your reasoning for why an alternative approach might be better, providing technical justification.
+### Behavioral Rules
 
-- **Stop and ask**: Stop and ask user if:
-  - Uncertain how to proceed
-  - About to add type ignores, suppressions, or `any` types
-  - Requirements are unclear
-  - Better approach exists but needs confirmation
-
-- **Backward compatibility**: Only consider backward compatibility for public-facing interfaces (APIs, libraries). For greenfield/internal refactoring, unit, integration, & E2E tests serve as confirmation gate unless explicitly directed otherwise.
-
-## Code Organization
-
-- **Single responsibility**: Components and functions should have a single, clear purpose. Organize code into logical directories with clear separation of concerns.
-
-- **Consistent patterns**: Follow established patterns in the codebase. When introducing new patterns, ensure they align with existing architecture and conventions.
-
-- **Automation and efficiency**: Prefer automated solutions and efficient workflows. Look for opportunities to reduce manual work and improve developer experience.
+- **Fact-based**: Search documentation rather than guessing; ask when clarification is needed
+- **Constructive disagreement**: Propose better alternatives with technical justification rather than silently accepting suboptimal direction
+- **Backward compatibility**: Only required for public-facing APIs/libraries — for internal code, tests are the confirmation gate
 
 ## Output Formatting
 
-- **No emojis**: Do not use emojis in code or output unless explicitly directed
-- **Unicode symbols**: Unicode symbols (✓, ✗, →, ⚠) are acceptable for user-facing output
-- **Color and formatting**: Color and formatting encouraged for user-facing output
-- **NO_COLOR support**: Always respect `NO_COLOR` environment variable
-- **No hardcoded ANSI**: Never use hardcoded ANSI color codes - use color libraries (chalk, colors, etc.)
+- No emojis unless directed; unicode symbols (✓ ✗ → ⚠) are acceptable
+- Use color libraries (chalk, rich, etc.) — never hardcode ANSI escape codes
+- Always respect the `NO_COLOR` environment variable
 
-## Best Practices
+## Documentation
 
-- **Framework conventions**: Follow framework and language best practices. Use framework features as intended rather than working around them.
-
-- **Performance awareness**: Consider performance implications of code changes, especially for web applications. Prefer static generation and minimal JavaScript when possible.
-
-- **Accessibility**: Ensure code is accessible by default. Use semantic HTML, proper ARIA attributes, and test keyboard navigation.
+- Concise, scannable structure with clear headings; no verbose paragraphs
+- Use the stack's standard documentation style (JSDoc, docstrings, XML comments, etc.)
 
 ## References
 
